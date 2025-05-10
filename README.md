@@ -60,3 +60,9 @@ Users select a movie from the dropdown.
 The system recommends the top 5 similar movies based on genre similarity.
 
 Movie posters are displayed alongside titles for better visualization.
+
+
+## 🔗 Live Demo
+
+Check out the live app here: [Cinelumeria on Streamlit](https://cine-lumiere-gxfghflte2zw4mmwfmnlk8.streamlit.app/)
+
