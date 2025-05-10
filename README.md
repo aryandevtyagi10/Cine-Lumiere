@@ -38,15 +38,18 @@ pip install -r requirements.txt
 🧠 Leverages cosine similarity and TF-IDF vectorization for content-based filtering.
 
 
-## Tech Stack
+## 🛠️ Tech Stack
 
-**Streamlit** - Frontend framework for the app.
-
-**Python** - Core backend logic.
-
-**Scikit-learn** - For building the recommendation algorithm.
-
-**OMDb API** - Fetching movie metadata and posters.
+- ![Python](https://img.shields.io/badge/Python-3.10-blue?logo=python&logoColor=white)
+- ![Streamlit](https://img.shields.io/badge/Streamlit-App-red?logo=streamlit)
+- ![Pandas](https://img.shields.io/badge/Pandas-Data--Analysis-purple?logo=pandas&logoColor=white)
+- ![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-ML-orange?logo=scikit-learn&logoColor=white)
+- ![OMDb API](https://img.shields.io/badge/OMDb-API-303030?logo=datadog&logoColor=white)
+- ![Requests](https://img.shields.io/badge/Requests-HTTP%20Client-darkgreen)
+- ![Dotenv](https://img.shields.io/badge/Python--Dotenv-Environment-lightgrey)
+- ![Git](https://img.shields.io/badge/Git-VersionControl-orange?logo=git&logoColor=white)
+- ![GitHub](https://img.shields.io/badge/GitHub-CodeHosting-black?logo=github)
+- ![Streamlit Cloud](https://img.shields.io/badge/Streamlit-Cloud%20Deployment-red?logo=streamlit)
 
 
 
