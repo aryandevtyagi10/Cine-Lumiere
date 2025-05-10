@@ -68,8 +68,8 @@ cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
 indices = pd.Series(movies.index, index=movies['title']).drop_duplicates()
 
 # Streamlit app UI
-st.title("🎬 Movie Recommender System")
-st.write("Pick a movie and get 5 similar movies based on genre!")
+st.title("🎬 Movie Recommendation System")
+st.write("Pick a movie and get similar movies based on your favourite genre!")
 
 # Movie selection
 selected_movie = st.selectbox("Choose a movie:", sorted(movies['title'].tolist()))
