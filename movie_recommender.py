@@ -9,13 +9,13 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
-# OMDb API Key
-OMDB_API_KEY = os.getenv("256a86f4")  # This will load the API key from the .env file
+# OMDb API Key (replace with your actual OMDb API key in .env file)
+OMDB_API_KEY = os.getenv("OMDB_API_KEY")  # This will load the API key from the .env file
 
 # Function to fetch movie poster from OMDb
 def fetch_poster(title):
     try:
-        url = f"http://www.omdbapi.com/?i=tt3896198&apikey=256a86f4&t={title}"
+        url = f"http://www.omdbapi.com/?apikey={OMDB_API_KEY}&t={title}"
         res = requests.get(url).json()
         if res.get("Poster") and res["Poster"] != "N/A":
             return res["Poster"]
