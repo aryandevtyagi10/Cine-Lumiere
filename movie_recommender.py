@@ -9,8 +9,8 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
-# OMDb API Key (replace with your actual OMDb API key in .env file)
-OMDB_API_KEY = os.getenv("OMDB_API_KEY")  # This will load the API key from the .env file
+# OMDb API Key
+OMDB_API_KEY = os.getenv("OMDB_API_KEY")
 
 # Function to fetch movie poster from OMDb
 def fetch_poster(title):
@@ -56,26 +56,27 @@ def get_recommendations(title, cosine_sim, indices, movies):
     idx = indices[title]
     sim_scores = list(enumerate(cosine_sim[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-    sim_scores = sim_scores[1:6]  # Get top 5 recommendations
+    sim_scores = sim_scores[1:6]  # Top 5
     movie_indices = [i[0] for i in sim_scores]
     return movies['title'].iloc[movie_indices].tolist()
 
-# Load and process movie data
+# Load and process data
 movies = load_data()
 tfidf = TfidfVectorizer(stop_words='english')
 tfidf_matrix = tfidf.fit_transform(movies['genres'])
 cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
 indices = pd.Series(movies.index, index=movies['title']).drop_duplicates()
 
-# Streamlit app UI
+# Streamlit UI
 st.title("🎬 Movie Recommendation System")
 st.write("Pick a movie and get similar movies based on your favourite genre!")
 
-# Movie selection
-selected_movie = st.selectbox("Choose a movie:", sorted(movies['title'].tolist()))
+# Dropdown with placeholder
+movie_list = ['Select a movie'] + sorted(movies['title'].tolist())
+selected_movie = st.selectbox("Choose a movie:", movie_list)
 
 # Recommend button
-if st.button("Recommend"):
+if selected_movie != 'Select a movie' and st.button("Recommend"):
     recommendations = get_recommendations(selected_movie, cosine_sim, indices, movies)
     st.subheader("Top 5 Recommendations:")
 
