@@ -86,7 +86,11 @@ if st.session_state.current_movie:
         poster_url = fetch_poster(movie)
         col1, col2 = st.columns([1, 3])
         with col1:
-            st.image(poster_url or "", width=100)
+    if poster_url:
+        st.image(poster_url, width=100)
+    else:
+        st.write("No image available")
+
         with col2:
             st.markdown(f"**{movie}**")
 
