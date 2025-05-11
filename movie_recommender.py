@@ -50,13 +50,17 @@ def load_data():
     return df
 
 # Get movie recommendations based on cosine similarity
-def get_recommendations(title, cosine_sim, indices, movies):
+def get_recommendations(title, cosine_sim, indices, movies, start_idx, batch_size=10):
     if title not in indices:
         return []
     idx = indices[title]
     sim_scores = list(enumerate(cosine_sim[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-    sim_scores = sim_scores[1:6]  # Top 5
+
+    # Exclude the searched movie from recommendations
+    sim_scores = [score for score in sim_scores if score[0] != idx]
+
+    sim_scores = sim_scores[start_idx:start_idx + batch_size]  # Get the next batch of recommendations
     movie_indices = [i[0] for i in sim_scores]
     return movies['title'].iloc[movie_indices].tolist()
 
@@ -75,11 +79,19 @@ st.write("Pick a movie and get similar movies based on your favourite genre!")
 movie_list = ['Select a movie'] + sorted(movies['title'].tolist())
 selected_movie = st.selectbox("Choose a movie:", movie_list)
 
+# Track how many recommendations have been loaded
+if 'loaded_recommendations' not in st.session_state:
+    st.session_state.loaded_recommendations = 0  # Initialize the counter
+
 # Recommend button
 if selected_movie != 'Select a movie' and st.button("Recommend"):
-    recommendations = get_recommendations(selected_movie, cosine_sim, indices, movies)
-    st.subheader("Top 5 Recommendations:")
-
+    # Number of recommendations to load initially
+    start_idx = st.session_state.loaded_recommendations
+    batch_size = 10  # You can adjust this number to load more or fewer recommendations at a time
+    
+    recommendations = get_recommendations(selected_movie, cosine_sim, indices, movies, start_idx, batch_size)
+    st.subheader(f"Recommendations starting from {start_idx + 1}:")
+    
     for movie in recommendations:
         poster_url = fetch_poster(movie)
         col1, col2 = st.columns([1, 3])
@@ -90,3 +102,11 @@ if selected_movie != 'Select a movie' and st.button("Recommend"):
                 st.write("No image available")
         with col2:
             st.markdown(f"**{movie}**")
+    
+    # Increment the loaded recommendations count
+    st.session_state.loaded_recommendations += len(recommendations)
+    
+    # Add a "Load More" button for additional recommendations
+    if len(recommendations) == batch_size:
+        if st.button("Load More"):
+            st.experimental_rerun()
